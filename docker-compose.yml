@@ -1,0 +1,59 @@
+version: '3'
+services:
+    ### auth service
+    mysql-auth:
+        container_name: mysql-auth
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: default
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: dev
+        ports:
+            - 3306:3306
+
+    fpm-auth:
+        container_name: fpm-auth
+        image: devilbox/php-fpm-7.4:latest
+        depends_on:
+            - mysql
+        volumes:
+            - ./api:/var/www/html
+            - .docker/.bashrc:/root/.bashrc
+        build:
+            context: .docker/php
+
+    nginx-auth:
+        container_name: nginx-auth
+        image: nginx
+        volumes:
+            - .docker/nginx.conf:/etc/nginx/conf.d/default.conf
+            - .docker/.bashrc:/root/.bashrc
+        links:
+            - php-fpm
+        ports:
+            - 9000:9000
+
+    ### api service
+    fpm-api:
+        container_name: php-fpm
+        image: devilbox/php-fpm-7.4:latest
+        volumes:
+            - ./api:/var/www/html
+            - .docker/.bashrc:/root/.bashrc
+        build:
+            context: .docker/php
+
+    nginx-api:
+        container_name: nginx-api
+        image: nginx
+        volumes:
+            - .docker/nginx.conf:/etc/nginx/conf.d/default.conf
+            - .docker/.bashrc:/root/.bashrc
+        links:
+            - php-fpm
+        ports:
+            - 9001:9001
+
+
+

@@ -1,22 +1,9 @@
 version: '3'
 services:
     ### auth service
-    mysql-auth:
-        container_name: mysql-auth
-        image: mysql:5.7
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: default
-            MYSQL_USER: dev
-            MYSQL_PASSWORD: dev
-        ports:
-            - 3306:3306
-
     fpm-auth:
         container_name: fpm-auth
         image: devilbox/php-fpm-7.4:latest
-        depends_on:
-            - mysql-auth
         volumes:
             - ./auth:/var/www/html
             - .docker/.bashrc:/root/.bashrc

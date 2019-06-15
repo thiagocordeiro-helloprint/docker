@@ -1,9 +1,17 @@
 version: '3'
 services:
+    mailcatcher:
+        ports:
+            - 1080:1080
+        container_name: mailcatcher
+        image: schickling/mailcatcher
+
     ### auth service
     fpm-auth:
         container_name: fpm-auth
         image: devilbox/php-fpm-7.4:latest
+        depends_on:
+            - mailcatcher
         volumes:
             - ./auth:/var/www/html
             - .docker/.bashrc:/root/.bashrc

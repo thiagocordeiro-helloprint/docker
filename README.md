@@ -11,17 +11,19 @@ To run the project, start cloning the first project, go into the folder and run 
     cd helloprint
     
     ./build.sh
+    
+### Running
+
+    ./run.sh
+stop simply pressing `Ctrl+C`
 
 ### Running login page
 As soon as build get finished, you'll be able to access the application via browser
 
 [http://localhost:8008/](http://localhost:8008/)
 
-### Running worker
+### Reading emails
 
-    docker exec fpm-auth bin/console password:reset
-to stop worker simply press `Ctrl+C`
+[http://localhost:1080/](http://localhost:1080/)
 
-### Stopping project
 
-    docker-compose down

@@ -8,5 +8,3 @@ docker-compose up --build -d
 
 docker exec fpm-api composer install
 docker exec fpm-auth composer install
-
-# docker exec fpm-auth bin/console password:reset

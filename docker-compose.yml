@@ -17,6 +17,11 @@ services:
             - .docker/.bashrc:/root/.bashrc
         build:
             context: .docker/php
+        environment:
+            APP_ENV: 'dev'
+            APP_SECRET: '5efe1ac31fa0e2ea650649a345a1cd83'
+            DATABASE_URL: 'sqlite:///%kernel.project_dir%/var/sqlite.db'
+            MAILER_URL: 'smtp://mailcatcher:1025?encryption=&auth_mode='
 
     nginx-auth:
         container_name: nginx-auth
@@ -40,6 +45,10 @@ services:
             - .docker/.bashrc:/root/.bashrc
         build:
             context: .docker/php
+        environment:
+            APP_ENV: 'dev'
+            APP_SECRET: '5efe1ac31fa0e2ea650649a345a1cd83'
+            CORS_ALLOW_ORIGIN_DOMAIN: 'localhost'
 
     nginx-api:
         container_name: nginx-api
